@@ -2,6 +2,7 @@ package com.nery.store.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,7 +14,8 @@ import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class Livro implements Serializable{
+@Entity
+public class Produto implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,23 +29,24 @@ public class Livro implements Serializable{
     @Length(min = 3, max = 200, message = "O campo Nome do Autor deve ter entre 3 e 200 caracteres!!")
     private String descricao;
 
-    @NotEmpty(message = "O campo Preço não pode estar vazio!!")
-    private Float preco;
+    // @NotEmpty(message = "O campo Preço não pode estar vazio!!")
+    // private Double preco;
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
 
-    public Livro() {
+    public Produto() {
         super();
     }
 
-    public Livro(Integer id, String titulo, String descricao, Float preco) {
+    public Produto(Integer id, String titulo, String descricao,/*  Double preco, */ Categoria categoria) {
         this.id = id;
         this.titulo = titulo;
         this.descricao = descricao;
-        this.preco = preco;
+        // this.preco = preco;
+        this.categoria = categoria;
     }
 
     public Integer getId() {
@@ -70,25 +73,29 @@ public class Livro implements Serializable{
         this.descricao = descricao;
     }
 
-    public Float getPreco() {
-        return preco;
+    // public Double getPreco() {
+    //     return preco;
+    // }
+
+    // public void setPreco(Double preco) {
+    //     this.preco = preco;
+    // }
+
+    public Categoria getCategoria() {
+        return categoria;
     }
 
-    public void setPreco(Float preco) {
-        this.preco = preco;
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
         result = prime * result + ((id == null) ? 0 : id.hashCode());
-        result = prime * result + ((preco == null) ? 0 : preco.hashCode());
-        result = prime * result + ((titulo == null) ? 0 : titulo.hashCode());
         return result;
     }
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -97,29 +104,14 @@ public class Livro implements Serializable{
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Livro other = (Livro) obj;
-        if (descricao == null) {
-            if (other.descricao != null)
-                return false;
-        } else if (!descricao.equals(other.descricao))
-            return false;
+        Produto other = (Produto) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
         } else if (!id.equals(other.id))
             return false;
-        if (preco == null) {
-            if (other.preco != null)
-                return false;
-        } else if (!preco.equals(other.preco))
-            return false;
-        if (titulo == null) {
-            if (other.titulo != null)
-                return false;
-        } else if (!titulo.equals(other.titulo))
-            return false;
         return true;
-    }
+    }    
 
     
 }
