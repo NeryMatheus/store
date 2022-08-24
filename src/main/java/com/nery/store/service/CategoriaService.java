@@ -3,10 +3,14 @@ package com.nery.store.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nery.store.domain.Categoria;
+import com.nery.store.dtos.CategoriaDTO;
+import com.nery.store.exceptions.DataIntegrityViolationException;
 import com.nery.store.exceptions.ObjectNotFoundExceptions;
 import com.nery.store.repositories.CategoriaRepository;
 
@@ -28,6 +32,22 @@ public class CategoriaService {
     public Categoria create(Categoria cat) {
         cat.setId(null);
         return categoriaRepository.save(cat);
+    }
+
+    public Categoria update(Integer id, CategoriaDTO catDTO) {
+        Categoria cat = findById(id);
+        cat.setNome(catDTO.getNome());
+        cat.setDesc(catDTO.getDesc());
+        return categoriaRepository.save(cat);
+    }
+
+    public void delete(Integer id) {
+        findById(id);
+        try {
+            categoriaRepository.deleteById(id);
+        } catch (org.springframework.dao.DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationException("Categoria não pode ser excluída pois possui livros associados!!");
+        }
     }
 
 }
