@@ -30,7 +30,7 @@ public class Produto implements Serializable{
     private String descricao;
 
     // @NotEmpty(message = "O campo Preço não pode estar vazio!!")
-    // private Double preco;
+    // private BigDecimal  preco;
 
     @JsonIgnore
     @ManyToOne
@@ -41,7 +41,7 @@ public class Produto implements Serializable{
         super();
     }
 
-    public Produto(Integer id, String titulo, String descricao,/*  Double preco, */ Categoria categoria) {
+    public Produto(Integer id, String titulo, String descricao, /* BigDecimal preco, */ Categoria categoria) {
         this.id = id;
         this.titulo = titulo;
         this.descricao = descricao;
@@ -73,11 +73,11 @@ public class Produto implements Serializable{
         this.descricao = descricao;
     }
 
-    // public Double getPreco() {
+    // public BigDecimal  getPreco() {
     //     return preco;
     // }
 
-    // public void setPreco(Double preco) {
+    // public void setPreco(BigDecimal  preco) {
     //     this.preco = preco;
     // }
 
