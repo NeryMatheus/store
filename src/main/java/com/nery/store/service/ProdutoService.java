@@ -25,4 +25,20 @@ public class ProdutoService {
         return produtoRepository.findAll();
     }
 
+    public Produto update(Integer id, Produto prod) {
+        Produto newProd = findById(id);
+        updateData(newProd, prod);
+        return produtoRepository.save(newProd);
+    }
+
+    private void updateData(Produto newProd, Produto prod) {
+        newProd.setTitulo(prod.getTitulo());
+        newProd.setDescricao(prod.getDescricao());
+    }
+
+    public void delete(Integer id) {
+        Produto prod = findById(id);
+        produtoRepository.delete(prod);
+    }
+
 }
