@@ -29,8 +29,7 @@ public class Produto implements Serializable{
     @Length(min = 3, max = 200, message = "O campo Nome do Autor deve ter entre 3 e 200 caracteres!!")
     private String descricao;
 
-    // @NotEmpty(message = "O campo Preço não pode estar vazio!!")
-    // private BigDecimal  preco;
+    private double preco;
 
     @JsonIgnore
     @ManyToOne
@@ -41,11 +40,11 @@ public class Produto implements Serializable{
         super();
     }
 
-    public Produto(Integer id, String titulo, String descricao, /* BigDecimal preco, */ Categoria categoria) {
+    public Produto(Integer id, String titulo, String descricao, double preco, Categoria categoria) {
         this.id = id;
         this.titulo = titulo;
         this.descricao = descricao;
-        // this.preco = preco;
+        this.preco = preco;
         this.categoria = categoria;
     }
 
@@ -73,13 +72,13 @@ public class Produto implements Serializable{
         this.descricao = descricao;
     }
 
-    // public BigDecimal  getPreco() {
-    //     return preco;
-    // }
+    public double getPreco() {
+        return preco;
+    }
 
-    // public void setPreco(BigDecimal  preco) {
-    //     this.preco = preco;
-    // }
+    public void setPreco(double  preco) {
+        this.preco = preco;
+    }
 
     public Categoria getCategoria() {
         return categoria;
