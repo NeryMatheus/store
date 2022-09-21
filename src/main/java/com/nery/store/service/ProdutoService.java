@@ -25,8 +25,9 @@ public class ProdutoService {
         return obj.orElseThrow(() ->  new ObjectNotFoundExceptions("Objeto não encontrado!! Id: " + id + ". Tipo: " + Produto.class.getName(), null));
     }
 
-    public List<Produto> findAll() {
-        return produtoRepository.findAll();
+    public List<Produto> findAll(Integer id_cat) {
+        categoriaService.findById(id_cat);
+        return produtoRepository.findProdutos(id_cat);
     }
 
     public Produto update(Integer id, Produto prod) {

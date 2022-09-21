@@ -41,8 +41,8 @@ public class ProdutoResources implements Serializable {
     }
 
     @GetMapping()
-    public ResponseEntity<List<ProdutoDTO>> findAll() {
-        List<Produto> list = produtoService.findAll();
+    public ResponseEntity<List<ProdutoDTO>> findAll(@RequestParam(value = "categoria", defaultValue = "0") Integer id_cat) {
+        List<Produto> list = produtoService.findAll(id_cat);
         List<ProdutoDTO> listDTO = list.stream().map(x -> new ProdutoDTO(x)).collect(Collectors.toList());
         return ResponseEntity.ok().body(listDTO);
     }
